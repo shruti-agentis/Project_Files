@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Roadmap & Release Timeline</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind for Class-based Dark Mode & Custom Fonts -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom scrollbar for smooth embedding in Google Sites iframes */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.5);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.8);
+        }
+        /* Smooth fade-in animation for filtered items */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- Main Container: Designed with clean padding that adapts nicely inside a Google Sites embed frame -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+
+        <!-- Header & Theme Toggle -->
+        <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+            <div>
+                <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 mb-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400"></span>
+                    <span id="roadmap-subtitle">2026 – 2027 Product Roadmap</span>
+                </div>
+                <h1 id="roadmap-title" class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+                    Product Releases & Milestones
+                </h1>
+                <p id="roadmap-description" class="mt-1 text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
+                    Track shipped updates, active engineering sprints, and upcoming strategic releases across our product ecosystem.
+                </p>
+            </div>
+
+            <!-- Controls: View Switcher & Dark Mode Toggle -->
+            <div class="flex items-center gap-2.5 self-start sm:self-center">
+                <!-- View Switcher Pill -->
+                <div class="inline-flex p-1 rounded-xl bg-slate-200/80 dark:bg-slate-800/80 border border-slate-300/50 dark:border-slate-700/50" role="group" aria-label="View Switcher">
+                    <button id="btn-view-timeline" onclick="setView('timeline')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>Timeline</span>
+                    </button>
+                    <button id="btn-view-grid" onclick="setView('grid')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                        <span>Grid</span>
+                    </button>
+                </div>
+
+                <!-- Dark Mode Toggle Button -->
+                <button id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Light/Dark Mode" class="p-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors shadow-sm">
+                    <!-- Sun Icon (shown in dark mode) -->
+                    <svg id="icon-sun" class="w-4 h-4 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <!-- Moon Icon (shown in light mode) -->
+                    <svg id="icon-moon" class="w-4 h-4 block dark:hidden text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Filter & Search Bar -->
+        <section class="py-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <!-- Status Filter Tabs -->
+            <div class="flex flex-wrap items-center gap-1.5" id="status-filters">
+                <!-- Populated dynamically via JS -->
+            </div>
+
+            <!-- Product Line Dropdown & Search Input -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                <!-- Product Line Filter -->
+                <div class="relative">
+                    <select id="product-line-filter" onchange="handleProductLineChange(this.value)" aria-label="Filter by Product Line" class="w-full sm:w-48 appearance-none pl-3.5 pr-9 py-2 rounded-xl text-sm font-medium bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow shadow-sm cursor-pointer">
+                        <!-- Populated dynamically via JS -->
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+
+                <!-- Search Input -->
+                <div class="relative">
+                    <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="Search features or versions..." class="w-full sm:w-56 pl-9 pr-3.5 py-2 rounded-xl text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow shadow-sm">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Metrics Strip -->
+        <section id="metrics-strip" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+            <!-- Populated dynamically via JS -->
+        </section>
+
+        <!-- Main Content Display Area (Timeline or Grid) -->
+        <main id="roadmap-container" class="min-h-[300px]">
+            <!-- Releases rendered here -->
+        </main>
+
+        <!-- Empty State (Hidden by default) -->
+        <div id="empty-state" class="hidden text-center py-14 px-4 rounded-2xl bg-white dark:bg-slate-900 border border-dashed border-slate-300 dark:border-slate-700">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 mb-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h3 class="text-base font-semibold text-slate-900 dark:text-white">No matching releases found</h3>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Try clearing your search query or adjusting the product line and status filters.</p>
+            <button onclick="resetFilters()" class="mt-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm">
+                Reset All Filters
+            </button>
+        </div>
+
+        <!-- Subtle Footer Note -->
+        <footer class="mt-10 pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <p id="footer-note">Release dates for planned milestones are target estimates and subject to change.</p>
+            <p id="last-updated">Last updated: November 2026</p>
+        </footer>
+    </div>
+
+    <!-- Modal for Detailed Release Notes (Optional click-to-expand) -->
+    <div id="detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs transition-opacity" onclick="closeModalOnBackdrop(event)">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl max-w-lg w-full p-6 shadow-2xl transform transition-all animate-fade-in" role="dialog" aria-modal="true">
+            <div class="flex items-start justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+                <div>
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span id="modal-product-line" class="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400"></span>
+                        <span class="text-slate-300 dark:text-slate-600">&bull;</span>
+                        <span id="modal-version" class="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"></span>
+                    </div>
+                    <h2 id="modal-title" class="text-xl font-bold text-slate-900 dark:text-white"></h2>
+                </div>
+                <button onclick="closeModal()" aria-label="Close modal" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <div class="py-4 space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 text-sm">
+                    <div id="modal-status-badge"></div>
+                    <div class="flex items-center gap-1.5 text-slate-600 dark:text-slate-300 font-medium">
+                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <span id="modal-date"></span>
+                    </div>
+                </div>
+
+                <p id="modal-summary" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+
+                <div>
+                    <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2.5">Key Highlights & Deliverables</h4>
+                    <ul id="modal-highlights" class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
+                        <!-- Populated dynamically -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+                <button onclick="closeModal()" class="px-4 py-2 rounded-xl text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- CONFIGURATION & SAMPLE DATA (EDIT THIS SECTION TO CUSTOMIZE ROADMAP)  -->
+    <!-- ===================================================================== -->
+    <script>
+        /**
+         * 1. GENERAL SETTINGS
+         * Customize the page header, default view, and theme settings here.
+         */
+        const ROADMAP_CONFIG = {
+            subtitle: "2026 – 2027 Product Roadmap",
+            title: "Product Releases & Milestones",
+            description: "Explore recent releases, active engineering work, and upcoming features across all product lines.",
+            footerNote: "Target dates for In Development and Planned releases are subject to change.",
+            lastUpdated: "Updated November 2026",
+            defaultView: "timeline", // Options: "timeline" or "grid"
+            defaultTheme: "auto"     // Options: "light", "dark", or "auto" (follows system preference)
+        };
+
+        /**
+         * 2. PRODUCT RELEASES DATA
+         * Add, edit, or remove objects in this array to update your roadmap.
+         *
+         * Field Reference:
+         * - id:          Unique identifier string (e.g., "rel-1")
+         * - productLine: Category or product name used for filtering (e.g., "Core Platform", "Mobile App")
+         * - title:       Release headline
+         * - version:     Version tag (e.g., "v3.4.0")
+         * - quarter:     Quarter label used to group items in Timeline view (e.g., "Q3 2026", "Q4 2026", "Q1 2027")
+         * - targetDate:  Specific release date or target window (e.g., "Sep 18, 2026" or "Target: Dec 2026")
+         * - status:      Must be one of: "Released", "In Development", or "Planned"
+         * - summary:     Brief 1-2 sentence overview of the release
+         * - highlights:  Array of bullet points detailing key features
+         */
+        const RELEASES_DATA = [
+            {
+                id: "rel-101",
+                productLine: "Core Platform",
+                title: "Unified Workspace & SSO 2.0",
+                version: "v4.2.0",
+                quarter: "Q3 2026",
+                targetDate: "Released Aug 24, 2026",
+                status: "Released",
+                summary: "Introduced multi-tenant workspace switching and enterprise SAML/OIDC single sign-on with automated SCIM provisioning.",
+                highlights: [
+                    "Instant workspace switcher without re-authentication",
+                    "Automated role mapping via Okta and Azure AD",
+                    "40% faster dashboard cold-start load times"
+                ]
+            },
+            {
+                id: "rel-102",
+                productLine: "Analytics Suite",
+                title: "Real-Time Funnel & Cohort Explorer",
+                version: "v2.8.0",
+                quarter: "Q3 2026",
+                targetDate: "Released Sep 29, 2026",
+                status: "Released",
+                summary: "Live streaming event ingestion paired with interactive multi-step conversion funnels and retention heatmaps.",
+                highlights: [
+                    "Sub-second event processing pipeline",
+                    "One-click CSV and Google Sheets scheduled exports",
+                    "Custom SQL expression builder for power users"
+                ]
+            },
+            {
+                id: "rel-103",
+                productLine: "Mobile App",
+                title: "Offline Sync & Biometric Vault",
+                version: "v3.1.0",
+                quarter: "Q4 2026",
+                targetDate: "Target: Dec 10, 2026",
+                status: "In Development",
+                summary: "Full offline read/write support with automatic conflict resolution and hardware-backed biometric app lock.",
+                highlights: [
+                    "Local SQLite caching for seamless airplane-mode editing",
+                    "FaceID and Fingerprint quick-unlock support",
+                    "Redesigned bottom navigation for one-handed use"
+                ]
+            },
+            {
+                id: "rel-104",
+                productLine: "Core Platform",
+                title: "Automated Workflow Builder",
+                version: "v4.3.0",
+                quarter: "Q4 2026",
+                targetDate: "Target: Dec 18, 2026",
+                status: "In Development",
+                summary: "Visual no-code trigger and action builder allowing teams to automate approvals, webhooks, and Slack notifications.",
+                highlights: [
+                    "Drag-and-drop conditional branching logic",
+                    "25+ pre-built integration templates",
+                    "Execution audit logs with one-click replay"
+                ]
+            },
+            {
+                id: "rel-105",
+                productLine: "AI Assistant",
+                title: "Contextual Copilot & Auto-Summaries",
+                version: "v1.0.0",
+                quarter: "Q1 2027",
+                targetDate: "Target: Feb 2027",
+                status: "Planned",
+                summary: "Embedded AI assistant capable of summarizing project activity, drafting release notes, and answering natural-language queries.",
+                highlights: [
+                    "Grounded strictly in your workspace permissions",
+                    "Automated weekly digest generation",
+                    "Zero-data-retention enterprise privacy guarantee"
+                ]
+            },
+            {
+                id: "rel-106",
+                productLine: "Analytics Suite",
+                title: "Predictive Revenue Forecasting",
+                version: "v3.0.0",
+                quarter: "Q2 2027",
+                targetDate: "Target: May 2027",
+                status: "Planned",
+                summary: "Machine-learning forecast models that project quarterly trends with confidence intervals and scenario sliders.",
+                highlights: [
+                    "Interactive 'What-If' parameter modeling",
+                    "Anomaly detection alerts via email and webhook",
+                    "Embeddable read-only executive scorecards"
+                ]
+            }
+        ];
+
+        // =====================================================================
+        // APPLICATION STATE & LOGIC (No edits needed below unless customizing UI)
+        // =====================================================================
+
+        let state = {
+            view: ROADMAP_CONFIG.defaultView,
+            statusFilter: "All",
+            productLineFilter: "All",
+            searchQuery: ""
+        };
+
+        const STATUS_STYLES = {
+            "Released": {
+                badgeBg: "bg-emerald-50 dark:bg-emerald-950/60",
+                badgeText: "text-emerald-700 dark:text-emerald-300",
+                badgeBorder: "border-emerald-200 dark:border-emerald-800/70",
+                dot: "bg-emerald-500",
+                icon: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>`
+            },
+            "In Development": {
+                badgeBg: "bg-amber-50 dark:bg-amber-950/60",
+                badgeText: "text-amber-700 dark:text-amber-300",
+                badgeBorder: "border-amber-200 dark:border-amber-800/70",
+                dot: "bg-amber-500 animate-pulse",
+                icon: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`
+            },
+            "Planned": {
+                badgeBg: "bg-indigo-50 dark:bg-indigo-950/60",
+                badgeText: "text-indigo-700 dark:text-indigo-300",
+                badgeBorder: "border-indigo-200 dark:border-indigo-800/70",
+                dot: "bg-indigo-500",
+                icon: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>`
+            }
+        };
+
+        /**
+         * Initialize the page on load
+         */
+        function init() {
+            applyInitialTheme();
+            applyConfigText();
+            populateProductLineDropdown();
+            renderStatusFilters();
+            renderMetrics();
+            setView(state.view);
+        }
+
+        /**
+         * Apply light/dark theme based on config or user preference
+         */
+        function applyInitialTheme() {
+            const htmlEl = document.documentElement;
+            if (ROADMAP_CONFIG.defaultTheme === "dark") {
+                htmlEl.classList.add("dark");
+            } else if (ROADMAP_CONFIG.defaultTheme === "light") {
+                htmlEl.classList.remove("dark");
+            } else {
+                // Auto detect system preference
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    htmlEl.classList.add("dark");
+                }
+            }
+        }
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle("dark");
+        }
+
+        /**
+         * Apply configurable header & footer strings
+         */
+        function applyConfigText() {
+            document.getElementById("roadmap-subtitle").textContent = ROADMAP_CONFIG.subtitle;
+            document.getElementById("roadmap-title").textContent = ROADMAP_CONFIG.title;
+            document.getElementById("roadmap-description").textContent = ROADMAP_CONFIG.description;
+            document.getElementById("footer-note").textContent = ROADMAP_CONFIG.footerNote;
+            document.getElementById("last-updated").textContent = ROADMAP_CONFIG.lastUpdated;
+        }
+
+        /**
+         * Populate the Product Line <select> dynamically from data
+         */
+        function populateProductLineDropdown() {
+            const select = document.getElementById("product-line-filter");
+            const productLines = ["All", ...new Set(RELEASES_DATA.map(item => item.productLine))];
+
+            select.innerHTML = productLines.map(line => {
+                const label = line === "All" ? "All Product Lines" : line;
+                return `<option value="${escapeHtml(line)}">${escapeHtml(label)}</option>`;
+            }).join("");
+        }
+
+        /**
+         * Render Status Filter Pills with counts
+         */
+        function renderStatusFilters() {
+            const container = document.getElementById("status-filters");
+            const statuses = ["All", "Released", "In Development", "Planned"];
+
+            container.innerHTML = statuses.map(status => {
+                const count = status === "All"
+                    ? RELEASES_DATA.length
+                    : RELEASES_DATA.filter(r => r.status === status).length;
+
+                const isActive = state.statusFilter === status;
+                const activeClasses = isActive
+                    ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm border-transparent"
+                    : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800";
+
+                const countClasses = isActive
+                    ? "bg-white/20 text-white dark:bg-slate-900/15 dark:text-slate-900"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400";
+
+                return `
+                    <button onclick="setStatusFilter('${status}')" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium border transition-all ${activeClasses}">
+                        <span>${status}</span>
+                        <span class="px-1.5 py-0.2 rounded-md text-xs font-semibold ${countClasses}">${count}</span>
+                    </button>
+                `;
+            }).join("");
+        }
+
+        /**
+         * Render Summary KPI Cards
+         */
+        function renderMetrics() {
+            const container = document.getElementById("metrics-strip");
+            const total = RELEASES_DATA.length;
+            const released = RELEASES_DATA.filter(r => r.status === "Released").length;
+            const inDev = RELEASES_DATA.filter(r => r.status === "In Development").length;
+            const planned = RELEASES_DATA.filter(r => r.status === "Planned").length;
+
+            const metrics = [
+                { label: "Total Milestones", value: total, accent: "text-slate-900 dark:text-white" },
+                { label: "Shipped / Released", value: released, accent: "text-emerald-600 dark:text-emerald-400" },
+                { label: "In Development", value: inDev, accent: "text-amber-600 dark:text-amber-400" },
+                { label: "Planned", value: planned, accent: "text-indigo-600 dark:text-indigo-400" }
+            ];
+
+            container.innerHTML = metrics.map(m => `
+                <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs">
+                    <div class="text-xs font-medium text-slate-500 dark:text-slate-400">${m.label}</div>
+                    <div class="mt-1 text-xl sm:text-2xl font-bold tracking-tight ${m.accent}">${m.value}</div>
+                </div>
+            `).join("");
+        }
+
+        /**
+         * Filter logic combining Status, Product Line, and Search Query
+         */
+        function getFilteredReleases() {
+            return RELEASES_DATA.filter(item => {
+                const matchesStatus = state.statusFilter === "All" || item.status === state.statusFilter;
+                const matchesLine = state.productLineFilter === "All" || item.productLine === state.productLineFilter;
+
+                const q = state.searchQuery.trim().toLowerCase();
+                const matchesSearch = !q ||
+                    item.title.toLowerCase().includes(q) ||
+                    item.version.toLowerCase().includes(q) ||
+                    item.productLine.toLowerCase().includes(q) ||
+                    item.summary.toLowerCase().includes(q) ||
+                    item.highlights.some(h => h.toLowerCase().includes(q));
+
+                return matchesStatus && matchesLine && matchesSearch;
+            });
+        }
+
+        /**
+         * View & Filter Handlers
+         */
+        function setView(viewName) {
+            state.view = viewName;
+
+            const btnTimeline = document.getElementById("btn-view-timeline");
+            const btnGrid = document.getElementById("btn-view-grid");
+
+            const activeBtnClass = "bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm";
+            const inactiveBtnClass = "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-transparent shadow-none";
+
+            if (viewName === "timeline") {
+                btnTimeline.className = `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${activeBtnClass}`;
+                btnGrid.className = `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${inactiveBtnClass}`;
+            } else {
+                btnGrid.className = `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${activeBtnClass}`;
+                btnTimeline.className = `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${inactiveBtnClass}`;
+            }
+
+            renderRoadmap();
+        }
+
+        function setStatusFilter(status) {
+            state.statusFilter = status;
+            renderStatusFilters();
+            renderRoadmap();
+        }
+
+        function handleProductLineChange(line) {
+            state.productLineFilter = line;
+            renderRoadmap();
+        }
+
+        function handleSearch(query) {
+            state.searchQuery = query;
+            renderRoadmap();
+        }
+
+        function resetFilters() {
+            state.statusFilter = "All";
+            state.productLineFilter = "All";
+            state.searchQuery = "";
+            document.getElementById("product-line-filter").value = "All";
+            document.getElementById("search-input").value = "";
+            renderStatusFilters();
+            renderRoadmap();
+        }
+
+        /**
+         * Main Render Switcher (Timeline vs Grid)
+         */
+        function renderRoadmap() {
+            const container = document.getElementById("roadmap-container");
+            const emptyState = document.getElementById("empty-state");
+            const filtered = getFilteredReleases();
+
+            if (filtered.length === 0) {
+                container.innerHTML = "";
+                emptyState.classList.remove("hidden");
+                return;
+            }
+
+            emptyState.classList.add("hidden");
+
+            if (state.view === "timeline") {
+                renderTimelineView(container, filtered);
+            } else {
+                renderGridView(container, filtered);
+            }
+        }
+
+        /**
+         * Render Grouped Timeline View (Grouped by Quarter)
+         */
+        function renderTimelineView(container, releases) {
+            // Group releases by quarter while preserving order of appearance
+            const groups = [];
+            const groupMap = {};
+
+            releases.forEach(rel => {
+                if (!groupMap[rel.quarter]) {
+                    groupMap[rel.quarter] = [];
+                    groups.push({ quarter: rel.quarter, items: groupMap[rel.quarter] });
+                }
+                groupMap[rel.quarter].push(rel);
+            });
+
+            container.innerHTML = `
+                <div class="relative space-y-8 before:content-[''] before:absolute before:top-2 before:bottom-2 before:left-3.5 sm:before:left-36 before:w-0.5 before:bg-slate-200 dark:before:bg-slate-800">
+                    ${groups.map(group => `
+                        <div class="relative flex flex-col sm:flex-row gap-4 sm:gap-8 animate-fade-in">
+                            <!-- Quarter Milestone Marker -->
+                            <div class="sm:w-32 shrink-0 flex items-center sm:items-start sm:justify-end pl-9 sm:pl-0 pt-1">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wide bg-blue-600 text-white shadow-xs">
+                                    ${escapeHtml(group.quarter)}
+                                </span>
+                                <!-- Timeline Node Dot -->
+                                <span class="absolute left-2 sm:left-[8.65rem] top-2.5 w-3.5 h-3.5 rounded-full bg-white dark:bg-slate-950 border-4 border-blue-600"></span>
+                            </div>
+
+                            <!-- Quarter Cards Column -->
+                            <div class="flex-1 pl-9 sm:pl-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                ${group.items.map(item => createProductCardHTML(item)).join("")}
+                            </div>
+                        </div>
+                    `).join("")}
+                </div>
+            `;
+        }
+
+        /**
+         * Render Responsive Grid View
+         */
+        function renderGridView(container, releases) {
+            container.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 animate-fade-in">
+                    ${releases.map(item => createProductCardHTML(item, true)).join("")}
+                </div>
+            `;
+        }
+
+        /**
+         * Shared Product Card Component Template
+         */
+        function createProductCardHTML(item, showQuarterPill = false) {
+            const style = STATUS_STYLES[item.status] || STATUS_STYLES["Planned"];
+
+            return `
+                <article onclick="openModal('${escapeHtml(item.id)}')" class="group cursor-pointer flex flex-col justify-between p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-600 hover:shadow-md transition-all duration-200">
+                    <div>
+                        <!-- Top Meta Row: Product Line & Version -->
+                        <div class="flex items-center justify-between gap-2 mb-2.5">
+                            <span class="text-xs font-semibold tracking-wide text-blue-600 dark:text-blue-400">
+                                ${escapeHtml(item.productLine)}
+                            </span>
+                            <div class="flex items-center gap-1.5">
+                                ${showQuarterPill ? `<span class="text-xs font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">${escapeHtml(item.quarter)}</span>` : ""}
+                                <span class="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60">
+                                    ${escapeHtml(item.version)}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Title & Summary -->
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            ${escapeHtml(item.title)}
+                        </h3>
+                        <p class="mt-1.5 text-sm text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                            ${escapeHtml(item.summary)}
+                        </p>
+
+                        <!-- Key Feature Highlights -->
+                        <ul class="mt-4 space-y-1.5 border-t border-slate-100 dark:border-slate-800/80 pt-3">
+                            ${item.highlights.slice(0, 3).map(feat => `
+                                <li class="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
+                                    <svg class="w-3.5 h-3.5 mt-0.5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4"></path></svg>
+                                    <span>${escapeHtml(feat)}</span>
+                                </li>
+                            `).join("")}
+                        </ul>
+                    </div>
+
+                    <!-- Card Footer: Status Badge & Target Date -->
+                    <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${style.badgeBg} ${style.badgeText} ${style.badgeBorder}">
+                            <span class="w-1.5 h-1.5 rounded-full ${style.dot}"></span>
+                            ${escapeHtml(item.status)}
+                        </span>
+                        <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                            ${escapeHtml(item.targetDate)}
+                        </span>
+                    </div>
+                </article>
+            `;
+        }
+
+        /**
+         * Detail Modal Controls
+         */
+        function openModal(releaseId) {
+            const item = RELEASES_DATA.find(r => r.id === releaseId);
+            if (!item) return;
+
+            const style = STATUS_STYLES[item.status] || STATUS_STYLES["Planned"];
+
+            document.getElementById("modal-product-line").textContent = item.productLine;
+            document.getElementById("modal-version").textContent = `${item.version} (${item.quarter})`;
+            document.getElementById("modal-title").textContent = item.title;
+            document.getElementById("modal-date").textContent = item.targetDate;
+            document.getElementById("modal-summary").textContent = item.summary;
+
+            document.getElementById("modal-status-badge").innerHTML = `
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${style.badgeBg} ${style.badgeText} ${style.badgeBorder}">
+                    <span class="w-1.5 h-1.5 rounded-full ${style.dot}"></span>
+                    ${escapeHtml(item.status)}
+                </span>
+            `;
+
+            document.getElementById("modal-highlights").innerHTML = item.highlights.map(h => `
+                <li class="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                    <svg class="w-4 h-4 mt-0.5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                    <span>${escapeHtml(h)}</span>
+                </li>
+            `).join("");
+
+            const modal = document.getElementById("detail-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("detail-modal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+
+        function closeModalOnBackdrop(event) {
+            if (event.target.id === "detail-modal") {
+                closeModal();
+            }
+        }
+
+        // Allow closing modal with Escape key
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeModal();
+        });
+
+        /**
+         * Simple HTML sanitizer to prevent XSS if user pastes special characters in data
+         */
+        function escapeHtml(str) {
+            if (typeof str !== "string") return str;
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Boot application
+        window.addEventListener("DOMContentLoaded", init);
+    </script>
+</body>
+</html>
